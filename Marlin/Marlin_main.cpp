@@ -29,6 +29,8 @@
 
 #include "Marlin.h"
 
+#include "serial.h" // <---------- OUR CUSTOM SERIAL INTERFACE
+
 #ifdef ENABLE_AUTO_BED_LEVELING
 #include "vector_3.h"
   #ifdef ACCURATE_BED_LEVELING
