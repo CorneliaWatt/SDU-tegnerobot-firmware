@@ -1,5 +1,5 @@
 model=arduino:avr:uno
-port=/dev/ttyACM0
+port=/dev/ttyUSB0
 
 main: compile
 
