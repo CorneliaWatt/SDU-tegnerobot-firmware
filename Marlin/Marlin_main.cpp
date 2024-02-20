@@ -29,7 +29,7 @@
 
 #include "Marlin.h"
 
-#include "serial.h" // <---------- OUR CUSTOM SERIAL INTERFACE
+#include "tegnerobot.h" // <---------- OUR CUSTOM SERIAL INTERFACE
 
 #ifdef ENABLE_AUTO_BED_LEVELING
 #include "vector_3.h"
@@ -3678,24 +3678,8 @@ void setup()
   if(mcu & 32) SERIAL_ECHOLNPGM(MSG_SOFTWARE_RESET);
   MCUSR=0;
 
-  SERIAL_ECHOPGM(MSG_MARLIN);
-  SERIAL_ECHOLNPGM(VERSION_STRING);
-  #ifdef STRING_VERSION_CONFIG_H
-    #ifdef STRING_CONFIG_H_AUTHOR
-      SERIAL_ECHO_START;
-      SERIAL_ECHOPGM(MSG_CONFIGURATION_VER);
-      SERIAL_ECHOPGM(STRING_VERSION_CONFIG_H);
-      SERIAL_ECHOPGM(MSG_AUTHOR);
-      SERIAL_ECHOLNPGM(STRING_CONFIG_H_AUTHOR);
-      SERIAL_ECHOPGM("Compiled: ");
-      SERIAL_ECHOLNPGM(__DATE__);
-    #endif
-  #endif
-  SERIAL_ECHO_START;
-  SERIAL_ECHOPGM(MSG_FREE_MEMORY);
-  SERIAL_ECHO(freeMemory());
-  SERIAL_ECHOPGM(MSG_PLANNER_BUFFER_BYTES);
-  SERIAL_ECHOLN((int)sizeof(block_t)*BLOCK_BUFFER_SIZE);
+  freeMemory();
+
   for(int8_t i = 0; i < BUFSIZE; i++)
   {
     fromsd[i] = false;
@@ -3714,10 +3698,6 @@ void setup()
   lcd_init();
   _delay_ms(1000);	// wait 1sec to display the splash screen
 
-  #if defined(CONTROLLERFAN_PIN) && CONTROLLERFAN_PIN > -1
-    SET_OUTPUT(CONTROLLERFAN_PIN); //Set pin used for driver cooling fan
-  #endif
-
   #ifdef DIGIPOT_I2C
     digipot_i2c_init();
   #endif
@@ -3728,7 +3708,7 @@ void setup()
   
   _delay_ms(1000);
   
-  plan_buffer_line(-10, 0, 0, 0, 10, 0);
+  plan_buffer_line(-40, -40, -10, 10, 10, 0);
   
 }
 

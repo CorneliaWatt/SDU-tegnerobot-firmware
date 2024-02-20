@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "Marlin.h"
+#include "tegnerobot.h"
 
 struct Vector {
     double x, y, z;
